@@ -1,5 +1,6 @@
 package com.management.crud.common.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
 import tools.jackson.databind.PropertyNamingStrategies;
@@ -15,6 +16,7 @@ public record GlobalResponse(
         Integer status,
         String message,
         Map<String, String> messages,
+        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
         LocalDateTime timestamp,
         Object data
 ) {
