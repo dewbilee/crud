@@ -24,7 +24,7 @@ public class BaseEntity {
     @Column(name = "created_by", nullable = false, insertable = false, updatable = false)
     String createdBy;
 
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", updatable = false)
     LocalDateTime createdAt;
 
     @ColumnDefault("'system'")

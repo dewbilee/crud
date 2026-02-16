@@ -1,4 +1,4 @@
-package com.management.crud.permission.model.entity;
+package com.management.crud.role.model.entity;
 
 import com.management.crud.common.model.BaseEntity;
 import jakarta.persistence.Column;
@@ -17,16 +17,13 @@ import java.util.List;
 @Getter
 @Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Table(name = "permission")
-public class PermissionEntity extends BaseEntity {
+@Table(name = "role")
+public class RoleEntity extends BaseEntity {
 
     @Column(name = "name", unique = true, nullable = false)
     String name;
 
     @JdbcTypeCode(SqlTypes.JSON)
-    @Column(columnDefinition = "json", nullable = false)
-    List<String> actions;
-
-    @Column(name = "path", nullable = false)
-    String path;
+    @Column(name = "permission_ids", columnDefinition = "json", nullable = false)
+    List<Integer> permissionIds;
 }
