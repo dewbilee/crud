@@ -34,7 +34,7 @@ public class BaseEntity {
     @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
     LocalDateTime updatedAt;
 
-    @ColumnDefault("true")
+    @ColumnDefault("false")
     @Column(nullable = false)
     boolean isDeleted;
 }
