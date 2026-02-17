@@ -1,9 +1,9 @@
-package com.management.crud.permission.controller;
+package com.management.crud.user.controller;
 
 import com.management.crud.common.response.GlobalResponse;
-import com.management.crud.permission.model.request.PermissionCreateRequest;
-import com.management.crud.permission.model.request.PermissionUpdateRequest;
-import com.management.crud.permission.service.PermissionService;
+import com.management.crud.user.model.request.UserCreateRequest;
+import com.management.crud.user.model.request.UserUpdateRequest;
+import com.management.crud.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,14 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 import static com.management.crud.common.enums.Response.SUCCESS;
 
 @RestController
-@RequestMapping("/permissions")
+@RequestMapping("/users")
 @RequiredArgsConstructor
-public class PermissionController {
+public class UserController {
 
-    private final PermissionService service;
+    private final UserService service;
 
     @GetMapping
-    public GlobalResponse getPermissions() {
+    public GlobalResponse getUsers() {
 
         return GlobalResponse.builder()
                 .status(HttpStatus.OK.value())
@@ -36,7 +36,7 @@ public class PermissionController {
     }
 
     @GetMapping("/{id}")
-    public GlobalResponse getPermission(@PathVariable("id") Long id) {
+    public GlobalResponse getUser(@PathVariable("id") Long id) {
 
         return GlobalResponse.builder()
                 .status(HttpStatus.OK.value())
@@ -46,7 +46,7 @@ public class PermissionController {
     }
 
     @PostMapping
-    public GlobalResponse createPermission(@Valid @RequestBody PermissionCreateRequest request) {
+    public GlobalResponse createUser(@Valid @RequestBody UserCreateRequest request) {
         service.create(request);
 
         return GlobalResponse.builder()
@@ -56,7 +56,7 @@ public class PermissionController {
     }
 
     @PutMapping
-    public GlobalResponse updatePermission(@Valid @RequestBody PermissionUpdateRequest request) {
+    public GlobalResponse updateUser(@Valid @RequestBody UserUpdateRequest request) {
         service.update(request);
 
         return GlobalResponse.builder()
@@ -66,7 +66,7 @@ public class PermissionController {
     }
 
     @DeleteMapping("/{id}")
-    public GlobalResponse deletePermission(@PathVariable("id") Long id) {
+    public GlobalResponse deleteUser(@PathVariable("id") Long id) {
         service.delete(id);
 
         return GlobalResponse.builder()

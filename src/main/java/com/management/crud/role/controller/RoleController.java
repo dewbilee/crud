@@ -36,7 +36,7 @@ public class RoleController {
     }
 
     @GetMapping("/{id}")
-    public GlobalResponse getRolesById(@PathVariable("id") Long id) {
+    public GlobalResponse getRole(@PathVariable("id") Long id) {
 
         return GlobalResponse.builder()
                 .status(HttpStatus.OK.value())

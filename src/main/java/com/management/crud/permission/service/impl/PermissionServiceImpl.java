@@ -62,17 +62,14 @@ public class PermissionServiceImpl implements PermissionService {
 
     private void checkDuplicate(String name) {
         if (repository.existsByNameAndIsDeletedFalse(name)) {
-            throw new ServiceException(ResponseCode.ERR_4001, String.format("Permission not found name : %s", name));
+            throw new ServiceException(ResponseCode.ERR_4001, String.format("Permission already exist : %s", name));
         }
     }
 
     private void checkExistence(Long id) {
-        boolean existence = repository.existsByIdAndIsDeletedFalse(id);
-
-        if (!existence) {
+        if (!repository.existsByIdAndIsDeletedFalse(id)) {
             log.error(String.format("Permission not found id : %s", id));
-            throw new ServiceException(ResponseCode.ERR_4005, String.format("Permission not found id : %s", id));
+            throw new ServiceException(ResponseCode.ERR_4005, String.format("Permission id not found : %s", id));
         }
     }
-
 }

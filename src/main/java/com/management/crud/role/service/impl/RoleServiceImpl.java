@@ -54,7 +54,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void create(RoleCreateRequest request) {
         checkDuplicate(request.getName());
-        checkPermissionIdsExistence(request.getPermissionIds());
+        checkPermissions(request.getPermissionIds());
         repository.save(mapper.toEntity(mapper.toDomain(request)));
     }
 
@@ -75,24 +75,29 @@ public class RoleServiceImpl implements RoleService {
         repository.save(entity);
     }
 
-    private void checkPermissionIdsExistence(List<Integer> ids) {
-        for (Integer id : ids) {
-            checkExistence(Long.valueOf(id));
-        }
-    }
-
     private void checkDuplicate(String name) {
         if (repository.existsByNameAndIsDeletedFalse(name)) {
-            throw new ServiceException(ResponseCode.ERR_4001, String.format("Permission not found name : %s", name));
+            throw new ServiceException(ResponseCode.ERR_4001, String.format("Role already exist: %s", name));
         }
     }
 
     private void checkExistence(Long id) {
-        boolean existence = repository.existsByIdAndIsDeletedFalse(id);
+        if (!repository.existsByIdAndIsDeletedFalse(id)) {
+            log.error(String.format("Role not found id : %s", id));
+            throw new ServiceException(ResponseCode.ERR_4005, String.format("Role not found id : %s", id));
+        }
+    }
 
-        if (!existence) {
-            log.error(String.format("Permission not found id : %s", id));
-            throw new ServiceException(ResponseCode.ERR_4005, String.format("Permission not found id : %s", id));
+    private void checkPermissions(List<Integer> ids) {
+        for (Integer id : ids) {
+            checkPermissionIdExistence(Long.valueOf(id));
+        }
+    }
+
+    private void checkPermissionIdExistence(Long id) {
+        if (!permissionRepository.existsByIdAndIsDeletedFalse(id)) {
+            log.error(String.format("Permission id not found : %s", id));
+            throw new ServiceException(ResponseCode.ERR_4005, String.format("Permission id not found : %s", id));
         }
     }
 
