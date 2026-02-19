@@ -18,4 +18,8 @@ public class User extends BaseDomain {
     String password;
     List<Integer> roleIds;
     List<Role> roles;
+    boolean isApproved;
+    String approvedBy;
+    List<Integer> approverIds;
+    List<User> approvers;
 }

@@ -35,6 +35,6 @@ public class BaseEntity {
     LocalDateTime updatedAt;
 
     @ColumnDefault("false")
-    @Column(nullable = false)
+    @Column(name = "is_deleted", nullable = false)
     boolean isDeleted;
 }

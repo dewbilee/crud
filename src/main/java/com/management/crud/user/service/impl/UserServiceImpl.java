@@ -17,6 +17,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -56,7 +57,9 @@ public class UserServiceImpl implements UserService {
     public void create(UserCreateRequest request) {
         checkDuplicate(request.getName());
         checkRoles(request.getRoleIds());
-        repository.save(mapper.toEntity(mapper.toDomain(request)));
+        User user = mapper.toDomain(request);
+        user.setApproverIds(new ArrayList<>());
+        repository.save(mapper.toEntity(user));
     }
 
     @Override
