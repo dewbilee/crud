@@ -1,5 +1,6 @@
 package com.management.crud.common.handler;
 
+import com.management.crud.common.enums.ResponseCode;
 import com.management.crud.common.exception.ServiceException;
 import com.management.crud.common.response.GlobalResponse;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -25,8 +26,9 @@ public class GlobalExceptionHandler {
             MethodArgumentTypeMismatchException ex) {
 
         GlobalResponse response = GlobalResponse.builder()
-                .status(BAD_REQUEST.value())
-                .message(ex.getMessage())
+                .status(ResponseCode.ERR_4000.getHttpCode())
+                .message(ResponseCode.ERR_4000.getMessage())
+                .description(ex.getMessage())
                 .timestamp(LocalDateTime.now()).build();
 
         return new ResponseEntity<>(response, BAD_REQUEST);
@@ -37,8 +39,9 @@ public class GlobalExceptionHandler {
             DataIntegrityViolationException ex) {
 
         GlobalResponse response = GlobalResponse.builder()
-                .status(BAD_REQUEST.value())
-                .message(ex.getMessage())
+                .status(ResponseCode.ERR_4001.getHttpCode())
+                .message(ResponseCode.ERR_4001.getMessage())
+                .description(ex.getMessage())
                 .timestamp(LocalDateTime.now()).build();
 
         return new ResponseEntity<>(response, BAD_REQUEST);
@@ -55,8 +58,9 @@ public class GlobalExceptionHandler {
                 .forEach(fieldError -> errors.put(fieldError.getField(), fieldError.getDefaultMessage()));
 
         GlobalResponse response = GlobalResponse.builder()
-                .status(BAD_REQUEST.value())
-                .messages(errors)
+                .status(ResponseCode.ERR_4000.getHttpCode())
+                .message(ResponseCode.ERR_4000.getMessage())
+                .descriptions(errors)
                 .timestamp(LocalDateTime.now()).build();
 
         return new ResponseEntity<>(response, BAD_REQUEST);
@@ -67,7 +71,7 @@ public class GlobalExceptionHandler {
 
         GlobalResponse response = GlobalResponse.builder()
                 .status(ex.getErrorCode().getHttpCode())
-                .message(String.format("%s %s", ex.getErrorCode().getDescription(), ex.getMessage()))
+                .message(ex.getMessage())
                 .timestamp(LocalDateTime.now()).build();
 
         return new ResponseEntity<>(response, HttpStatus.valueOf(ex.getErrorCode().getHttpCode()));
@@ -77,8 +81,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<GlobalResponse> handleGlobalException(Exception ex) {
 
         GlobalResponse response = GlobalResponse.builder()
-                .status(INTERNAL_SERVER_ERROR.value())
-                .message(ex.getMessage())
+                .status(ResponseCode.ERR_5000.getHttpCode())
+                .message(ResponseCode.ERR_5000.getMessage())
+                .description(ex.getMessage())
                 .timestamp(LocalDateTime.now()).build();
 
         return new ResponseEntity<>(response, INTERNAL_SERVER_ERROR);

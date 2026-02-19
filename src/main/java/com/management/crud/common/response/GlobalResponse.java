@@ -15,7 +15,8 @@ import java.util.Map;
 public record GlobalResponse(
         Integer status,
         String message,
-        Map<String, String> messages,
+        String description,
+        Map<String, String> descriptions,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
         LocalDateTime timestamp,
         Object data
