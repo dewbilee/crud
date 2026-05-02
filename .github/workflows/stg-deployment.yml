@@ -20,4 +20,4 @@ jobs:
           cache: maven
 
       - name: Run unit tests
-        run: mvn clean test
+        run: mvn clean test -Dspring.profiles.active=test
